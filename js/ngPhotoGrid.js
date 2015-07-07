@@ -3,7 +3,7 @@ angular.module("ngPhotoGrid")
   .directive("ngPhotoGrid", ["$templateCache", function($templateCache){
 
     $templateCache.put("photo_grid.html",
-      "<div class='photo-grid-wrapper' ng-style = 'parentStyle'><a href='#' class='grid-cell' ng-repeat= 'image in loadedImages track by $index' ng-style = 'image.cellStyle' ng-click='cellClicked(image, loadedImages)'><img class='grid-cell-image' ng-style='image.imageStyle' ng-src='{{image.original_url}}' alt='#'/></a></div>");
+      "<div class='photo-grid-wrapper' ng-style = 'parentStyle'><a href='#' class='grid-cell' ng-repeat= 'image in loadedImages track by $index' ng-style = 'image.cellStyle' ng-click='cellClicked(image, loadedImages)'><img class='grid-cell-image' ng-style='image.imageStyle' ng-src='{{getImageSrc(image)}}' alt='#'/></a></div>");
 
     function linker(scope, element, attrs) {
 
@@ -43,6 +43,10 @@ angular.module("ngPhotoGrid")
       //callback handler
       scope.cellClicked = function(image, images) {
         scope.defaultOptions.onClicked(image, images)
+      }
+
+      scope.getImageSrc = function(image) {
+          return image[scope.URL_KEY];
       }
 
       /**
